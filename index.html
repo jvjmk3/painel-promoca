@@ -1,0 +1,3910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07140d">
+<title>Painel Administrativo • Grupo 44224373</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#07110b;
+    --bg2:#0b1b11;
+    --card:#102418;
+    --card2:#132c1d;
+    --green:#35e47a;
+    --green2:#20b95b;
+    --text:#f4fff7;
+    --muted:#8da99a;
+    --border:#234b32;
+    --danger:#ff5757;
+    --warning:#ffc857;
+    --blue:#4da3ff;
+    --shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+body.light{
+    --bg:#edf5ef;
+    --bg2:#f8fcf9;
+    --card:#ffffff;
+    --card2:#eef8f1;
+    --green:#159447;
+    --green2:#0d7a38;
+    --text:#142219;
+    --muted:#607166;
+    --border:#cce0d2;
+    --shadow:0 12px 35px rgba(28,70,43,.12);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(53,228,122,.12),transparent 25%),
+        radial-gradient(circle at 90% 80%,rgba(32,185,91,.08),transparent 25%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.3s;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:255px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    padding:20px 14px;
+    background:rgba(7,17,11,.94);
+    border-right:1px solid var(--border);
+    backdrop-filter:blur(18px);
+    z-index:50;
+    overflow-y:auto;
+}
+
+body.light .sidebar{
+    background:rgba(255,255,255,.94);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 8px 25px;
+}
+
+.logo-icon{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,var(--green),var(--green2));
+    color:#031008;
+    font-size:22px;
+    font-weight:900;
+    box-shadow:0 8px 25px rgba(53,228,122,.2);
+}
+
+.logo strong{
+    display:block;
+    font-size:16px;
+}
+
+.logo span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.nav-title{
+    color:#60816d;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    padding:12px 12px 7px;
+}
+
+.nav-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    text-align:left;
+    padding:12px 13px;
+    border-radius:11px;
+    margin:3px 0;
+    transition:.2s;
+    font-size:14px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:rgba(53,228,122,.12);
+    color:var(--green);
+}
+
+.nav-btn span{
+    display:inline-block;
+    width:27px;
+}
+
+.sidebar-bottom{
+    margin-top:25px;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:rgba(53,228,122,.04);
+}
+
+.status-dot{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 10px var(--green);
+    margin-right:7px;
+}
+
+.sidebar-bottom small{
+    color:var(--muted);
+}
+
+/* MAIN */
+
+.main{
+    width:calc(100% - 255px);
+    margin-left:255px;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.mobile-menu{
+    display:none;
+}
+
+.page-title h1{
+    font-size:26px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.clock{
+    border:1px solid var(--border);
+    padding:10px 13px;
+    border-radius:11px;
+    background:var(--card);
+    font-size:13px;
+    color:var(--green);
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:11px;
+    font-size:17px;
+}
+
+.icon-btn:hover{
+    border-color:var(--green);
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    gap:15px;
+}
+
+.stats-grid{
+    grid-template-columns:repeat(4,1fr);
+    margin-bottom:18px;
+}
+
+.card{
+    background:linear-gradient(145deg,var(--card),var(--card2));
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:18px;
+    box-shadow:var(--shadow);
+}
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.stat-card:after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    right:-35px;
+    bottom:-35px;
+    background:var(--green);
+    opacity:.05;
+    border-radius:50%;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.stat-value{
+    font-size:27px;
+    font-weight:800;
+    margin-top:8px;
+}
+
+.stat-icon{
+    float:right;
+    font-size:25px;
+}
+
+/* SECTIONS */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.two-col{
+    grid-template-columns:1.4fr .8fr;
+}
+
+.three-col{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.card-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.card-title h2{
+    font-size:16px;
+}
+
+.card-title span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* FORM FIX */
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-size:12px;
+    font-weight:bold;
+    color:var(--muted);
+}
+
+/*
+   Inputs possuem estilo próprio e !important.
+   Isso impede que o texto digitado desapareça.
+*/
+
+input.form-input,
+select.form-input,
+textarea.form-input{
+    display:block !important;
+    width:100% !important;
+    min-height:48px !important;
+    background:#ffffff !important;
+    background-color:#ffffff !important;
+    color:#111111 !important;
+    -webkit-text-fill-color:#111111 !important;
+    caret-color:#111111 !important;
+    border:2px solid #355d43 !important;
+    border-radius:11px !important;
+    padding:13px 14px !important;
+    font-size:16px !important;
+    font-weight:500 !important;
+    outline:none !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    appearance:auto !important;
+}
+
+textarea.form-input{
+    min-height:110px !important;
+    resize:vertical !important;
+}
+
+input.form-input::placeholder,
+textarea.form-input::placeholder{
+    color:#666666 !important;
+    -webkit-text-fill-color:#666666 !important;
+    opacity:1 !important;
+}
+
+input.form-input:focus,
+select.form-input:focus,
+textarea.form-input:focus{
+    border-color:#159447 !important;
+    box-shadow:0 0 0 3px rgba(53,228,122,.16) !important;
+}
+
+select.form-input option{
+    background:#ffffff !important;
+    color:#111111 !important;
+}
+
+/* BUTTONS */
+
+.btn{
+    border:0;
+    border-radius:11px;
+    padding:12px 16px;
+    font-size:13px;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.08);
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,var(--green),var(--green2));
+    color:#031008;
+}
+
+.btn-secondary{
+    background:#20382a;
+    color:white;
+    border:1px solid var(--border);
+}
+
+body.light .btn-secondary{
+    color:var(--text);
+    background:#e1eee5;
+}
+
+.btn-danger{
+    background:rgba(255,87,87,.13);
+    color:#ff7777;
+    border:1px solid rgba(255,87,87,.3);
+}
+
+.btn-warning{
+    background:rgba(255,200,87,.12);
+    color:#ffd36d;
+    border:1px solid rgba(255,200,87,.25);
+}
+
+.btn-small{
+    padding:8px 10px;
+    font-size:11px;
+}
+
+.btn-full{
+    width:100%;
+}
+
+.actions{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+/* PLAYER */
+
+.player-card{
+    display:none;
+    margin-top:15px;
+    padding:16px;
+    border-radius:15px;
+    background:rgba(53,228,122,.05);
+    border:1px solid var(--border);
+}
+
+.player-card.show{
+    display:block;
+    animation:fadeIn .25s;
+}
+
+.player-head{
+    display:flex;
+    gap:13px;
+    align-items:center;
+}
+
+.avatar{
+    width:55px;
+    height:55px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#35e47a,#16753d);
+    display:grid;
+    place-items:center;
+    color:#031008;
+    font-size:20px;
+    font-weight:900;
+}
+
+.player-name{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:5px;
+    padding:4px 8px;
+    border-radius:999px;
+    font-size:10px;
+    background:rgba(53,228,122,.12);
+    color:var(--green);
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    text-align:left;
+    padding:12px 10px;
+    border-bottom:1px solid var(--border);
+    font-size:12px;
+}
+
+th{
+    color:var(--muted);
+    font-size:10px;
+    text-transform:uppercase;
+}
+
+/* ACTIVITY */
+
+.activity{
+    display:flex;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.activity:last-child{
+    border-bottom:0;
+}
+
+.activity-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:rgba(53,228,122,.1);
+}
+
+.activity-main{
+    flex:1;
+}
+
+.activity-main strong{
+    font-size:12px;
+}
+
+.activity-main p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+/* PROGRESS */
+
+.progress{
+    height:9px;
+    background:#193123;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+body.light .progress{
+    background:#dcebe0;
+}
+
+.progress-bar{
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--green2),var(--green));
+    transition:width .6s;
+}
+
+/* TOAST */
+
+#toastContainer{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    width:min(350px,calc(100vw - 30px));
+}
+
+.toast{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:4px solid var(--green);
+    border-radius:13px;
+    padding:13px;
+    box-shadow:var(--shadow);
+    animation:slideIn .3s;
+}
+
+.toast strong{
+    display:block;
+    font-size:13px;
+}
+
+.toast p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(6px);
+    z-index:900;
+    place-items:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:grid;
+}
+
+.modal-box{
+    width:min(500px,100%);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+    animation:pop .25s;
+}
+
+.modal-box h2{
+    margin-bottom:8px;
+}
+
+.modal-box p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+/* SEARCH */
+
+.search-box{
+    position:relative;
+}
+
+.search-box .form-input{
+    padding-right:90px !important;
+}
+
+.search-button{
+    position:absolute;
+    right:5px;
+    top:5px;
+    height:38px;
+    padding:0 13px;
+    border:0;
+    border-radius:8px;
+    background:var(--green);
+    color:#031008;
+    font-weight:bold;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:35px 15px;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+/* CONFIG */
+
+.setting{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.setting:last-child{
+    border-bottom:0;
+}
+
+.setting strong{
+    display:block;
+    font-size:13px;
+}
+
+.setting small{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.switch{
+    width:48px;
+    height:26px;
+    border-radius:20px;
+    background:#263b2d;
+    position:relative;
+    cursor:pointer;
+}
+
+.switch:after{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    top:3px;
+    left:4px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch.on{
+    background:var(--green2);
+}
+
+.switch.on:after{
+    left:24px;
+}
+
+/* LOGIN */
+
+.login-screen{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(53,228,122,.15),transparent 35%),
+        var(--bg);
+    z-index:2000;
+    display:grid;
+    place-items:center;
+    padding:20px;
+}
+
+.login-box{
+    width:min(420px,100%);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:23px;
+    padding:30px;
+    box-shadow:0 30px 90px rgba(0,0,0,.4);
+    text-align:center;
+}
+
+.login-logo{
+    width:65px;
+    height:65px;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    margin:0 auto 15px;
+    background:linear-gradient(135deg,var(--green),var(--green2));
+    color:#031008;
+    font-size:30px;
+    font-weight:900;
+}
+
+.login-box h1{
+    font-size:22px;
+}
+
+.login-box p{
+    color:var(--muted);
+    font-size:12px;
+    margin:8px 0 22px;
+}
+
+.login-screen.hidden{
+    display:none;
+}
+
+/* NOTIFICATION */
+
+.notification-badge{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    min-width:17px;
+    height:17px;
+    border-radius:50%;
+    background:#ff5757;
+    color:white;
+    font-size:9px;
+    display:grid;
+    place-items:center;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(5px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideIn{
+    from{opacity:0;transform:translateX(30px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+@keyframes pop{
+    from{opacity:0;transform:scale(.94)}
+    to{opacity:1;transform:scale(1)}
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .two-col{
+        grid-template-columns:1fr;
+    }
+
+    .three-col{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-left:0;
+        padding:15px;
+        padding-bottom:80px;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .top-actions .clock{
+        display:none;
+    }
+
+    .page-title h1{
+        font-size:21px;
+    }
+
+    .stats-grid{
+        gap:10px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .bottom-nav{
+        display:flex !important;
+    }
+}
+
+.bottom-nav{
+    display:none;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:62px;
+    background:rgba(7,17,11,.96);
+    border-top:1px solid var(--border);
+    z-index:100;
+    justify-content:space-around;
+    align-items:center;
+    backdrop-filter:blur(15px);
+}
+
+body.light .bottom-nav{
+    background:rgba(255,255,255,.96);
+}
+
+.bottom-nav button{
+    background:none;
+    border:0;
+    color:var(--muted);
+    font-size:10px;
+    padding:7px;
+}
+
+.bottom-nav button span{
+    display:block;
+    font-size:18px;
+    margin-bottom:2px;
+}
+
+.bottom-nav button.active{
+    color:var(--green);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="login-screen" id="loginScreen">
+    <div class="login-box">
+        <div class="login-logo">R</div>
+        <h1>Painel Administrativo</h1>
+        <p>Central de gerenciamento do Grupo Roblox 44224373</p>
+
+        <div class="form-group" style="text-align:left">
+            <label>Nome do instrutor</label>
+            <input
+                class="form-input"
+                id="loginName"
+                type="text"
+                placeholder="Digite seu nome"
+                autocomplete="off"
+                style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+            >
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="entrarPainel()">
+            Entrar no painel
+        </button>
+
+        <p style="margin-top:15px;font-size:10px">
+            Ambiente administrativo
+        </p>
+    </div>
+</div>
+
+
+<!-- SIDEBAR -->
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">R</div>
+        <div>
+            <strong>ROBLOX ADM</strong>
+            <span>Grupo 44224373</span>
+        </div>
+    </div>
+
+    <div class="nav-title">Principal</div>
+
+    <button class="nav-btn active" onclick="abrirSecao('inicio',this)">
+        <span>⌂</span> Início
+    </button>
+
+    <button class="nav-btn" onclick="abrirSecao('promocoes',this)">
+        <span>⬆</span> Promoções
+    </button>
+
+    <button class="nav-btn" onclick="abrirSecao('historico',this)">
+        <span>▤</span> Histórico
+    </button>
+
+    <button class="nav-btn" onclick="abrirSecao('membros',this)">
+        <span>♙</span> Membros
+    </button>
+
+    <div class="nav-title">Sistema</div>
+
+    <button class="nav-btn" onclick="abrirSecao('estatisticas',this)">
+        <span>◫</span> Estatísticas
+    </button>
+
+    <button class="nav-btn" onclick="abrirSecao('configuracoes',this)">
+        <span>⚙</span> Configurações
+    </button>
+
+    <button class="nav-btn" onclick="abrirSecao('ajuda',this)">
+        <span>?</span> Ajuda
+    </button>
+
+    <div class="sidebar-bottom">
+        <div>
+            <span class="status-dot"></span>
+            <strong style="font-size:12px">Sistema online</strong>
+        </div>
+        <small id="sidebarUser">Instrutor</small>
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+    <div style="display:flex;gap:12px;align-items:center">
+
+        <button class="icon-btn mobile-menu" onclick="abrirMenu()">
+            ☰
+        </button>
+
+        <div class="page-title">
+            <h1 id="pageTitle">Painel Administrativo</h1>
+            <p id="pageSubtitle">Controle de promoções e atividades</p>
+        </div>
+
+    </div>
+
+    <div class="top-actions">
+
+        <div class="clock" id="clock">
+            00:00:00
+        </div>
+
+        <button class="icon-btn" onclick="alternarTema()" title="Tema">
+            ◐
+        </button>
+
+        <button class="icon-btn" onclick="mostrarNotificacao()" title="Notificações" style="position:relative">
+            🔔
+            <span class="notification-badge" id="notificationCount">0</span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- INÍCIO -->
+
+<section class="section active" id="inicio">
+
+    <div class="grid stats-grid">
+
+        <div class="card stat-card">
+            <span class="stat-icon">👥</span>
+            <div class="stat-label">Grupo</div>
+            <div class="stat-value">44224373</div>
+            <span style="color:var(--green);font-size:10px">● Conectado</span>
+        </div>
+
+        <div class="card stat-card">
+            <span class="stat-icon">⬆</span>
+            <div class="stat-label">Promoções</div>
+            <div class="stat-value" id="totalPromocoes">0</div>
+            <span style="color:var(--muted);font-size:10px">Nesta sessão</span>
+        </div>
+
+        <div class="card stat-card">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-label">Atividade</div>
+            <div class="stat-value" id="atividade">100%</div>
+            <span style="color:var(--green);font-size:10px">Sistema ativo</span>
+        </div>
+
+        <div class="card stat-card">
+            <span class="stat-icon">🛡</span>
+            <div class="stat-label">Acesso</div>
+            <div class="stat-value">ADM</div>
+            <span style="color:var(--green);font-size:10px">Autorizado</span>
+        </div>
+
+    </div>
+
+
+    <div class="grid two-col">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>🔎 Buscar jogador</h2>
+                <span>Consulta</span>
+            </div>
+
+            <div class="search-box">
+
+                <input
+                    class="form-input"
+                    id="nomeJogador"
+                    type="text"
+                    placeholder="Digite o nome do jogador..."
+                    autocomplete="off"
+                    style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+                    onkeydown="if(event.key==='Enter') buscarJogador()"
+                >
+
+                <button class="search-button" onclick="buscarJogador()">
+                    Buscar
+                </button>
+
+            </div>
+
+            <div class="player-card" id="playerCard">
+
+                <div class="player-head">
+
+                    <div class="avatar" id="playerAvatar">
+                        ?
+                    </div>
+
+                    <div>
+                        <div class="player-name" id="playerName">
+                            Jogador
+                        </div>
+
+                        <span class="badge" id="playerRank">
+                            Membro
+                        </span>
+                    </div>
+
+                </div>
+
+                <div style="margin-top:15px">
+
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                        <small style="color:var(--muted)">Status</small>
+                        <small style="color:var(--green)">Ativo</small>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" style="width:85%"></div>
+                    </div>
+
+                </div>
+
+                <div class="actions" style="margin-top:14px">
+
+                    <button class="btn btn-primary btn-small" onclick="usarJogadorParaPromocao()">
+                        Promover
+                    </button>
+
+                    <button class="btn btn-secondary btn-small" onclick="copiarJogador()">
+                        Copiar nome
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>⚡ Ações rápidas</h2>
+            </div>
+
+            <div class="actions">
+
+                <button class="btn btn-primary btn-full" onclick="abrirSecaoPorNome('promocoes')">
+                    ⬆ Nova promoção
+                </button>
+
+                <button class="btn btn-secondary btn-full" onclick="abrirSecaoPorNome('historico')">
+                    📜 Ver histórico
+                </button>
+
+                <button class="btn btn-secondary btn-full" onclick="exportarHistorico()">
+                    📥 Exportar histórico
+                </button>
+
+                <button class="btn btn-secondary btn-full" onclick="atualizarPainel()">
+                    🔄 Atualizar painel
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid two-col" style="margin-top:18px">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>📊 Resumo da sessão</h2>
+                <span id="sessionTime">Sessão ativa</span>
+            </div>
+
+            <div style="margin-bottom:15px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                    <span style="font-size:12px">Eficiência</span>
+                    <span style="font-size:12px;color:var(--green)">92%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width:92%"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:15px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                    <span style="font-size:12px">Sistema</span>
+                    <span style="font-size:12px;color:var(--green)">100%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width:100%"></div>
+                </div>
+            </div>
+
+            <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                    <span style="font-size:12px">Atividade</span>
+                    <span style="font-size:12px;color:var(--green)">88%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width:88%"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>🛡 Segurança</h2>
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>Conexão segura</strong>
+                    <small>Canal protegido</small>
+                </div>
+
+                <span style="color:var(--green)">✓</span>
+
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>API no navegador</strong>
+                    <small>Não configurada</small>
+                </div>
+
+                <span style="color:var(--green)">✓</span>
+
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>Grupo</strong>
+                    <small>44224373</small>
+                </div>
+
+                <span style="color:var(--green)">✓</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROMOÇÕES -->
+
+<section class="section" id="promocoes">
+
+    <div class="grid two-col">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>⬆ Promover jogador</h2>
+                <span>Somente promoção</span>
+            </div>
+
+            <div class="form-group">
+
+                <label>Nome do jogador</label>
+
+                <input
+                    class="form-input"
+                    id="promocaoJogador"
+                    type="text"
+                    placeholder="Nome exato do jogador"
+                    autocomplete="off"
+                    style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Novo cargo</label>
+
+                <select
+                    class="form-input"
+                    id="novoCargo"
+                    style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+                >
+
+                    <option value="">Selecione o cargo</option>
+                    <option>Recruta</option>
+                    <option>Soldado</option>
+                    <option>Cabo</option>
+                    <option>Sargento</option>
+                    <option>Subtenente</option>
+                    <option>Tenente</option>
+                    <option>Capitão</option>
+                    <option>Major</option>
+                    <option>Coronel</option>
+                    <option>Oficial</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Motivo da promoção</label>
+
+                <textarea
+                    class="form-input"
+                    id="motivo"
+                    placeholder="Descreva o motivo da promoção..."
+                    style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+                ></textarea>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button class="btn btn-primary" onclick="confirmarPromocao()">
+                    ✓ Confirmar promoção
+                </button>
+
+                <button class="btn btn-secondary" onclick="limparFormulario()">
+                    Limpar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>📋 Prévia</h2>
+            </div>
+
+            <div id="previewPromocao">
+
+                <div class="empty">
+                    <div class="empty-icon">⬆</div>
+                    <p>Preencha os dados para visualizar a promoção.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:18px">
+
+        <div class="card-title">
+            <h2>ℹ️ Como funciona</h2>
+        </div>
+
+        <div class="grid three-col">
+
+            <div>
+                <strong style="font-size:13px">01. Jogador</strong>
+                <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                    Informe o nome exato do jogador.
+                </p>
+            </div>
+
+            <div>
+                <strong style="font-size:13px">02. Cargo</strong>
+                <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                    Escolha o novo cargo.
+                </p>
+            </div>
+
+            <div>
+                <strong style="font-size:13px">03. Confirmar</strong>
+                <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                    Confirme e registre a promoção.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HISTÓRICO -->
+
+<section class="section" id="historico">
+
+    <div class="card">
+
+        <div class="card-title">
+
+            <div>
+                <h2>📜 Histórico de promoções</h2>
+                <span>Registros armazenados neste navegador</span>
+            </div>
+
+            <div class="actions">
+
+                <button class="btn btn-secondary btn-small" onclick="exportarHistorico()">
+                    📥 Exportar
+                </button>
+
+                <button class="btn btn-danger btn-small" onclick="limparHistorico()">
+                    🗑 Limpar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Novo cargo</th>
+                        <th>Motivo</th>
+                        <th>Instrutor</th>
+                        <th>Data</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="historicoTabela"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MEMBROS -->
+
+<section class="section" id="membros">
+
+    <div class="grid two-col">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>👥 Gerenciador de membros</h2>
+                <span>Ferramentas</span>
+            </div>
+
+            <div class="form-group">
+
+                <label>Pesquisar membro</label>
+
+                <input
+                    class="form-input"
+                    id="buscaMembro"
+                    type="text"
+                    placeholder="Nome do membro..."
+                    oninput="filtrarMembros()"
+                    style="display:block!important;background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;"
+                >
+
+            </div>
+
+            <div id="listaMembros">
+
+                <div class="activity">
+                    <div class="activity-icon">👤</div>
+                    <div class="activity-main">
+                        <strong>Base de membros</strong>
+                        <p>Consulte jogadores pelo campo de busca.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>🧰 Ferramentas</h2>
+            </div>
+
+            <div class="actions">
+
+                <button class="btn btn-secondary btn-full" onclick="buscarJogadorMembros()">
+                    🔎 Buscar jogador
+                </button>
+
+                <button class="btn btn-secondary btn-full" onclick="copiarGrupo()">
+                    📋 Copiar ID do grupo
+                </button>
+
+                <button class="btn btn-secondary btn-full" onclick="abrirRoblox()">
+                    🌐 Abrir Roblox
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ESTATÍSTICAS -->
+
+<section class="section" id="estatisticas">
+
+    <div class="grid three-col">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>⬆ Promoções</h2>
+            </div>
+
+            <div class="stat-value" id="statsPromocoes">0</div>
+
+            <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                Total registrado
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>⚡ Atividade</h2>
+            </div>
+
+            <div class="stat-value">92%</div>
+
+            <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                Índice da sessão
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>🟢 Sistema</h2>
+            </div>
+
+            <div class="stat-value">Online</div>
+
+            <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                Todos os módulos locais funcionando
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:18px">
+
+        <div class="card-title">
+            <h2>📊 Distribuição de atividade</h2>
+        </div>
+
+        <div style="margin-bottom:17px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                <span style="font-size:12px">Promoções</span>
+                <span style="font-size:12px">75%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" style="width:75%"></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:17px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                <span style="font-size:12px">Consultas</span>
+                <span style="font-size:12px">60%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" style="width:60%"></div>
+            </div>
+        </div>
+
+        <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+                <span style="font-size:12px">Administração</span>
+                <span style="font-size:12px">88%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" style="width:88%"></div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONFIGURAÇÕES -->
+
+<section class="section" id="configuracoes">
+
+    <div class="grid two-col">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>⚙ Configurações</h2>
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>Modo escuro</strong>
+                    <small>Alterar aparência do painel</small>
+                </div>
+
+                <div class="switch on" id="themeSwitch" onclick="alternarTema()"></div>
+
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>Notificações</strong>
+                    <small>Mostrar avisos do sistema</small>
+                </div>
+
+                <div class="switch on" id="notificationSwitch" onclick="alternarNotificacoes()"></div>
+
+            </div>
+
+            <div class="setting">
+
+                <div>
+                    <strong>Salvar histórico</strong>
+                    <small>Guardar registros neste navegador</small>
+                </div>
+
+                <div class="switch on" id="historySwitch" onclick="alternarHistorico()"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                <h2>🛡 Informações</h2>
+            </div>
+
+            <p style="color:var(--muted);font-size:12px;line-height:1.7">
+                Grupo configurado:
+                <strong style="color:var(--text)">44224373</strong>
+                <br><br>
+                Este painel não armazena chaves secretas da Roblox.
+                <br><br>
+                Para promoção real, será necessário conectar um backend seguro à Roblox Open Cloud.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AJUDA -->
+
+<section class="section" id="ajuda">
+
+    <div class="card">
+
+        <div class="card-title">
+            <h2>❓ Central de ajuda</h2>
+        </div>
+
+        <div class="grid three-col">
+
+            <div class="card" style="box-shadow:none">
+
+                <h3 style="font-size:14px">Como promover?</h3>
+
+                <p style="color:var(--muted);font-size:11px;line-height:1.6;margin-top:8px">
+                    Abra Promoções, informe o jogador, selecione o novo cargo,
+                    escreva o motivo e confirme.
+                </p>
+
+            </div>
+
+            <div class="card" style="box-shadow:none">
+
+                <h3 style="font-size:14px">Onde fica o histórico?</h3>
+
+                <p style="color:var(--muted);font-size:11px;line-height:1.6;margin-top:8px">
+                    Todos os registros feitos neste navegador aparecem na aba Histórico.
+                </p>
+
+            </div>
+
+            <div class="card" style="box-shadow:none">
+
+                <h3 style="font-size:14px">Promoção real</h3>
+
+                <p style="color:var(--muted);font-size:11px;line-height:1.6;margin-top:8px">
+                    A versão atual simula e registra a ação. A integração real
+                    será feita posteriormente pelo servidor.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+    <button class="active" onclick="abrirSecaoPorNome('inicio');ativarBottom(this)">
+        <span>⌂</span>
+        Início
+    </button>
+
+    <button onclick="abrirSecaoPorNome('promocoes');ativarBottom(this)">
+        <span>⬆</span>
+        Promover
+    </button>
+
+    <button onclick="abrirSecaoPorNome('historico');ativarBottom(this)">
+        <span>▤</span>
+        Histórico
+    </button>
+
+    <button onclick="abrirSecaoPorNome('configuracoes');ativarBottom(this)">
+        <span>⚙</span>
+        Ajustes
+    </button>
+
+</nav>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="confirmModal">
+
+    <div class="modal-box">
+
+        <h2>Confirmar promoção</h2>
+
+        <p id="modalText">
+            Deseja confirmar esta promoção?
+        </p>
+
+        <div class="actions">
+
+            <button class="btn btn-primary" onclick="executarPromocao()">
+                Confirmar
+            </button>
+
+            <button class="btn btn-secondary" onclick="fecharModal()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="toastContainer"></div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURAÇÃO PRINCIPAL
+========================================================= */
+
+const GROUP_ID = "44224373";
+
+let usuarioAtual = localStorage.getItem("painel_usuario") || "";
+let historico = JSON.parse(localStorage.getItem("painel_historico") || "[]");
+let notificacoes = 0;
+let notificacoesAtivas = true;
+let salvarHistoricoAtivo = true;
+let promocaoPendente = null;
+let inicioSessao = Date.now();
+
+
+/* =========================================================
+   01 - LOGIN
+========================================================= */
+
+function entrarPainel(){
+
+    const nome = document.getElementById("loginName").value.trim();
+
+    if(!nome){
+        mostrarAviso("Digite seu nome para entrar.","warning");
+        return;
+    }
+
+    usuarioAtual = nome;
+
+    localStorage.setItem("painel_usuario",nome);
+
+    document.getElementById("loginScreen").classList.add("hidden");
+
+    document.getElementById("sidebarUser").textContent = "Instrutor: " + nome;
+
+    mostrarAviso("Bem-vindo, " + nome + "!");
+
+}
+
+
+/* =========================================================
+   02 - ABRIR MENU MOBILE
+========================================================= */
+
+function abrirMenu(){
+
+    document.getElementById("sidebar").classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   03 - SEÇÕES
+========================================================= */
+
+function abrirSecao(nome,botao){
+
+    document.querySelectorAll(".section").forEach(function(sec){
+        sec.classList.remove("active");
+    });
+
+    const secao = document.getElementById(nome);
+
+    if(secao){
+        secao.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(function(btn){
+        btn.classList.remove("active");
+    });
+
+    if(botao){
+        botao.classList.add("active");
+    }
+
+    atualizarTitulo(nome);
+
+    document.getElementById("sidebar").classList.remove("open");
+
+}
+
+
+function abrirSecaoPorNome(nome){
+
+    const botoes = document.querySelectorAll(".nav-btn");
+
+    let encontrado = null;
+
+    botoes.forEach(function(btn){
+
+        const texto = btn.textContent.toLowerCase();
+
+        if(
+            (nome === "inicio" && texto.includes("início")) ||
+            (nome === "promocoes" && texto.includes("promoções")) ||
+            (nome === "historico" && texto.includes("histórico")) ||
+            (nome === "membros" && texto.includes("membros")) ||
+            (nome === "estatisticas" && texto.includes("estatísticas")) ||
+            (nome === "configuracoes" && texto.includes("configurações")) ||
+            (nome === "ajuda" && texto.includes("ajuda"))
+        ){
+            encontrado = btn;
+        }
+
+    });
+
+    abrirSecao(nome,encontrado);
+
+}
+
+
+/* =========================================================
+   04 - TÍTULOS
+========================================================= */
+
+function atualizarTitulo(nome){
+
+    const titulos = {
+
+        inicio:["Painel Administrativo","Controle de promoções e atividades"],
+
+        promocoes:["Promoções","Gerenciamento de promoções"],
+
+        historico:["Histórico","Registro de atividades"],
+
+        membros:["Membros","Gerenciamento de membros"],
+
+        estatisticas:["Estatísticas","Dados e desempenho"],
+
+        configuracoes:["Configurações","Preferências do painel"],
+
+        ajuda:["Central de ajuda","Informações e suporte"]
+
+    };
+
+    if(titulos[nome]){
+
+        document.getElementById("pageTitle").textContent = titulos[nome][0];
+
+        document.getElementById("pageSubtitle").textContent = titulos[nome][1];
+
+    }
+
+}
+
+
+/* =========================================================
+   05 - RELÓGIO
+========================================================= */
+
+function atualizarRelogio(){
+
+    const agora = new Date();
+
+    document.getElementById("clock").textContent =
+        agora.toLocaleTimeString("pt-BR");
+
+}
+
+
+/* =========================================================
+   06 - TEMPO DE SESSÃO
+========================================================= */
+
+function atualizarSessao(){
+
+    const segundos = Math.floor((Date.now() - inicioSessao) / 1000);
+
+    const horas = Math.floor(segundos / 3600);
+
+    const minutos = Math.floor((segundos % 3600) / 60);
+
+    const secs = segundos % 60;
+
+    document.getElementById("sessionTime").textContent =
+        "Sessão " +
+        String(horas).padStart(2,"0") + ":" +
+        String(minutos).padStart(2,"0") + ":" +
+        String(secs).padStart(2,"0");
+
+}
+
+
+/* =========================================================
+   07 - TEMA
+========================================================= */
+
+function alternarTema(){
+
+    document.body.classList.toggle("light");
+
+    const claro = document.body.classList.contains("light");
+
+    localStorage.setItem("painel_tema",claro ? "light" : "dark");
+
+    const sw = document.getElementById("themeSwitch");
+
+    if(sw){
+        sw.classList.toggle("on",!claro);
+    }
+
+}
+
+
+/* =========================================================
+   08 - CARREGAR TEMA
+========================================================= */
+
+function carregarTema(){
+
+    const tema = localStorage.getItem("painel_tema");
+
+    if(tema === "light"){
+        document.body.classList.add("light");
+    }
+
+}
+
+
+/* =========================================================
+   09 - BUSCAR JOGADOR
+========================================================= */
+
+function buscarJogador(){
+
+    const input = document.getElementById("nomeJogador");
+
+    const nome = input.value.trim();
+
+    if(!nome){
+
+        mostrarAviso("Digite o nome do jogador.","warning");
+
+        input.focus();
+
+        return;
+
+    }
+
+    const primeiraLetra = nome.charAt(0).toUpperCase();
+
+    document.getElementById("playerAvatar").textContent = primeiraLetra;
+
+    document.getElementById("playerName").textContent = nome;
+
+    document.getElementById("playerRank").textContent = "Membro do grupo";
+
+    document.getElementById("playerCard").classList.add("show");
+
+    mostrarAviso("Jogador encontrado: " + nome);
+
+}
+
+
+/* =========================================================
+   10 - USAR JOGADOR NA PROMOÇÃO
+========================================================= */
+
+function usarJogadorParaPromocao(){
+
+    const nome = document.getElementById("playerName").textContent;
+
+    document.getElementById("promocaoJogador").value = nome;
+
+    abrirSecaoPorNome("promocoes");
+
+    atualizarPreview();
+
+}
+
+
+/* =========================================================
+   11 - COPIAR JOGADOR
+========================================================= */
+
+function copiarJogador(){
+
+    const nome = document.getElementById("playerName").textContent;
+
+    copiarTexto(nome);
+
+}
+
+
+/* =========================================================
+   12 - COPIAR GRUPO
+========================================================= */
+
+function copiarGrupo(){
+
+    copiarTexto(GROUP_ID);
+
+    mostrarAviso("ID do grupo copiado.");
+
+}
+
+
+/* =========================================================
+   13 - COPIAR TEXTO
+========================================================= */
+
+function copiarTexto(texto){
+
+    if(navigator.clipboard){
+
+        navigator.clipboard.writeText(texto);
+
+    }else{
+
+        const area = document.createElement("textarea");
+
+        area.value = texto;
+
+        document.body.appendChild(area);
+
+        area.select();
+
+        document.execCommand("copy");
+
+        area.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   14 - PROMOÇÃO
+========================================================= */
+
+function confirmarPromocao(){
+
+    const jogador =
+        document.getElementById("promocaoJogador").value.trim();
+
+    const cargo =
+        document.getElementById("novoCargo").value;
+
+    const motivo =
+        document.getElementById("motivo").value.trim();
+
+    if(!jogador){
+
+        mostrarAviso("Informe o jogador.","warning");
+
+        document.getElementById("promocaoJogador").focus();
+
+        return;
+
+    }
+
+    if(!cargo){
+
+        mostrarAviso("Selecione o novo cargo.","warning");
+
+        return;
+
+    }
+
+    if(!motivo){
+
+        mostrarAviso("Informe o motivo da promoção.","warning");
+
+        document.getElementById("motivo").focus();
+
+        return;
+
+    }
+
+    promocaoPendente = {
+
+        jogador:jogador,
+
+        cargo:cargo,
+
+        motivo:motivo
+
+    };
+
+    document.getElementById("modalText").textContent =
+        "Você está promovendo " +
+        jogador +
+        " para " +
+        cargo +
+        ". Deseja confirmar?";
+
+    document.getElementById("confirmModal").classList.add("show");
+
+}
+
+
+/* =========================================================
+   15 - EXECUTAR PROMOÇÃO
+========================================================= */
+
+function executarPromocao(){
+
+    if(!promocaoPendente){
+
+        fecharModal();
+
+        return;
+
+    }
+
+    const registro = {
+
+        id:Date.now(),
+
+        jogador:promocaoPendente.jogador,
+
+        cargo:promocaoPendente.cargo,
+
+        motivo:promocaoPendente.motivo,
+
+        instrutor:usuarioAtual || "Instrutor",
+
+        data:new Date().toLocaleString("pt-BR")
+
+    };
+
+    if(salvarHistoricoAtivo){
+
+        historico.unshift(registro);
+
+        localStorage.setItem(
+            "painel_historico",
+            JSON.stringify(historico)
+        );
+
+    }
+
+    fecharModal();
+
+    limparFormulario();
+
+    atualizarTudo();
+
+    incrementarNotificacao();
+
+    mostrarAviso(
+        "Promoção registrada com sucesso!",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   16 - FECHAR MODAL
+========================================================= */
+
+function fecharModal(){
+
+    document.getElementById("confirmModal").classList.remove("show");
+
+    promocaoPendente = null;
+
+}
+
+
+/* =========================================================
+   17 - LIMPAR FORMULÁRIO
+========================================================= */
+
+function limparFormulario(){
+
+    document.getElementById("promocaoJogador").value = "";
+
+    document.getElementById("novoCargo").value = "";
+
+    document.getElementById("motivo").value = "";
+
+    atualizarPreview();
+
+}
+
+
+/* =========================================================
+   18 - PRÉVIA DA PROMOÇÃO
+========================================================= */
+
+function atualizarPreview(){
+
+    const jogador =
+        document.getElementById("promocaoJogador").value.trim();
+
+    const cargo =
+        document.getElementById("novoCargo").value;
+
+    const motivo =
+        document.getElementById("motivo").value.trim();
+
+    const preview =
+        document.getElementById("previewPromocao");
+
+    if(!jogador && !cargo && !motivo){
+
+        preview.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">⬆</div>
+                <p>Preencha os dados para visualizar a promoção.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    preview.innerHTML = `
+
+        <div class="activity">
+
+            <div class="activity-icon">👤</div>
+
+            <div class="activity-main">
+
+                <strong>${escapeHTML(jogador || "Jogador não informado")}</strong>
+
+                <p>
+                    Novo cargo:
+                    <strong>${escapeHTML(cargo || "Não selecionado")}</strong>
+                </p>
+
+                <p>
+                    Motivo:
+                    ${escapeHTML(motivo || "Não informado")}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   19 - ESCAPAR HTML
+========================================================= */
+
+function escapeHTML(texto){
+
+    return String(texto)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   20 - HISTÓRICO
+========================================================= */
+
+function atualizarHistorico(){
+
+    const tabela =
+        document.getElementById("historicoTabela");
+
+    if(!historico.length){
+
+        tabela.innerHTML = `
+
+            <tr>
+
+                <td colspan="5">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">📜</div>
+
+                        Nenhuma promoção registrada.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    tabela.innerHTML = historico.map(function(item){
+
+        return `
+
+            <tr>
+
+                <td>
+                    <strong>${escapeHTML(item.jogador)}</strong>
+                </td>
+
+                <td>
+                    <span class="badge">
+                        ${escapeHTML(item.cargo)}
+                    </span>
+                </td>
+
+                <td>
+                    ${escapeHTML(item.motivo)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.instrutor)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.data)}
+                </td>
+
+            </tr>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   21 - CONTADOR
+========================================================= */
+
+function atualizarContadores(){
+
+    document.getElementById("totalPromocoes").textContent =
+        historico.length;
+
+    document.getElementById("statsPromocoes").textContent =
+        historico.length;
+
+}
+
+
+/* =========================================================
+   22 - LIMPAR HISTÓRICO
+========================================================= */
+
+function limparHistorico(){
+
+    if(!historico.length){
+
+        mostrarAviso("O histórico já está vazio.","warning");
+
+        return;
+
+    }
+
+    const confirmar =
+        confirm("Tem certeza que deseja apagar todo o histórico?");
+
+    if(!confirmar) return;
+
+    historico = [];
+
+    localStorage.removeItem("painel_historico");
+
+    atualizarTudo();
+
+    mostrarAviso("Histórico apagado.");
+
+}
+
+
+/* =========================================================
+   23 - EXPORTAR HISTÓRICO
+========================================================= */
+
+function exportarHistorico(){
+
+    if(!historico.length){
+
+        mostrarAviso("Não há registros para exportar.","warning");
+
+        return;
+
+    }
+
+    let texto =
+        "HISTÓRICO DE PROMOÇÕES\n" +
+        "GRUPO 44224373\n\n";
+
+    historico.forEach(function(item,index){
+
+        texto +=
+            `${index + 1}. ${item.jogador}\n` +
+            `Cargo: ${item.cargo}\n` +
+            `Motivo: ${item.motivo}\n` +
+            `Instrutor: ${item.instrutor}\n` +
+            `Data: ${item.data}\n\n`;
+
+    });
+
+    const blob =
+        new Blob([texto],{type:"text/plain"});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download = "historico-promocoes.txt";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    mostrarAviso("Histórico exportado.");
+
+}
+
+
+/* =========================================================
+   24 - NOTIFICAÇÃO
+========================================================= */
+
+function mostrarAviso(mensagem,tipo="success"){
+
+    if(!notificacoesAtivas) return;
+
+    const container =
+        document.getElementById("toastContainer");
+
+    const toast =
+        document.createElement("div");
+
+    toast.className = "toast";
+
+    if(tipo === "warning"){
+        toast.style.borderLeftColor = "#ffc857";
+    }
+
+    toast.innerHTML = `
+
+        <strong>
+            ${tipo === "warning" ? "Atenção" : "Sistema"}
+        </strong>
+
+        <p>${escapeHTML(mensagem)}</p>
+
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(function(){
+
+        toast.remove();
+
+    },3500);
+
+}
+
+
+/* =========================================================
+   25 - INCREMENTAR NOTIFICAÇÃO
+========================================================= */
+
+function incrementarNotificacao(){
+
+    notificacoes++;
+
+    document.getElementById("notificationCount").textContent =
+        notificacoes;
+
+}
+
+
+/* =========================================================
+   26 - MOSTRAR NOTIFICAÇÕES
+========================================================= */
+
+function mostrarNotificacao(){
+
+    if(!notificacoes){
+
+        mostrarAviso("Nenhuma notificação nova.");
+
+        return;
+
+    }
+
+    mostrarAviso(
+        notificacoes + " notificação(ões) disponível(is)."
+    );
+
+    notificacoes = 0;
+
+    document.getElementById("notificationCount").textContent = "0";
+
+}
+
+
+/* =========================================================
+   27 - CONFIGURAÇÃO DE NOTIFICAÇÕES
+========================================================= */
+
+function alternarNotificacoes(){
+
+    notificacoesAtivas = !notificacoesAtivas;
+
+    const sw =
+        document.getElementById("notificationSwitch");
+
+    sw.classList.toggle("on",notificacoesAtivas);
+
+}
+
+
+/* =========================================================
+   28 - CONFIGURAÇÃO DO HISTÓRICO
+========================================================= */
+
+function alternarHistorico(){
+
+    salvarHistoricoAtivo = !salvarHistoricoAtivo;
+
+    const sw =
+        document.getElementById("historySwitch");
+
+    sw.classList.toggle("on",salvarHistoricoAtivo);
+
+}
+
+
+/* =========================================================
+   29 - ATUALIZAR PAINEL
+========================================================= */
+
+function atualizarPainel(){
+
+    atualizarTudo();
+
+    mostrarAviso("Painel atualizado.");
+
+}
+
+
+/* =========================================================
+   30 - ATUALIZAR TUDO
+========================================================= */
+
+function atualizarTudo(){
+
+    atualizarHistorico();
+
+    atualizarContadores();
+
+    atualizarPreview();
+
+}
+
+
+/* =========================================================
+   31 - FILTRAR MEMBROS
+========================================================= */
+
+function filtrarMembros(){
+
+    const termo =
+        document.getElementById("buscaMembro")
+        .value
+        .trim();
+
+    const lista =
+        document.getElementById("listaMembros");
+
+    if(!termo){
+
+        lista.innerHTML = `
+
+            <div class="activity">
+
+                <div class="activity-icon">👤</div>
+
+                <div class="activity-main">
+
+                    <strong>Base de membros</strong>
+
+                    <p>
+                        Consulte jogadores pelo campo de busca.
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    lista.innerHTML = `
+
+        <div class="activity">
+
+            <div class="activity-icon">
+                ${escapeHTML(termo.charAt(0).toUpperCase())}
+            </div>
+
+            <div class="activity-main">
+
+                <strong>${escapeHTML(termo)}</strong>
+
+                <p>
+                    Consulta preparada para este jogador.
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   32 - BUSCAR EM MEMBROS
+========================================================= */
+
+function buscarJogadorMembros(){
+
+    const campo =
+        document.getElementById("buscaMembro");
+
+    campo.focus();
+
+    mostrarAviso("Digite o nome do jogador.");
+
+}
+
+
+/* =========================================================
+   33 - ABRIR ROBLOX
+========================================================= */
+
+function abrirRoblox(){
+
+    window.open(
+        "https://www.roblox.com/",
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   34 - NAVEGAÇÃO BOTTOM
+========================================================= */
+
+function ativarBottom(botao){
+
+    document.querySelectorAll(".bottom-nav button")
+        .forEach(function(btn){
+            btn.classList.remove("active");
+        });
+
+    botao.classList.add("active");
+
+}
+
+
+/* =========================================================
+   35 - CARREGAR USUÁRIO
+========================================================= */
+
+function carregarUsuario(){
+
+    if(usuarioAtual){
+
+        document.getElementById("loginScreen")
+            .classList.add("hidden");
+
+        document.getElementById("sidebarUser")
+            .textContent =
+            "Instrutor: " + usuarioAtual;
+
+    }
+
+}
+
+
+/* =========================================================
+   36 - ENTER NO LOGIN
+========================================================= */
+
+document.getElementById("loginName")
+.addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+
+        entrarPainel();
+
+    }
+
+});
+
+
+/* =========================================================
+   37 - PRÉVIA EM TEMPO REAL
+========================================================= */
+
+document.getElementById("promocaoJogador")
+.addEventListener("input",atualizarPreview);
+
+document.getElementById("novoCargo")
+.addEventListener("change",atualizarPreview);
+
+document.getElementById("motivo")
+.addEventListener("input",atualizarPreview);
+
+
+/* =========================================================
+   38 - FECHAR MODAL AO CLICAR FORA
+========================================================= */
+
+document.getElementById("confirmModal")
+.addEventListener("click",function(event){
+
+    if(event.target === this){
+
+        fecharModal();
+
+    }
+
+});
+
+
+/* =========================================================
+   39 - TECLA ESC
+========================================================= */
+
+document.addEventListener("keydown",function(event){
+
+    if(event.key === "Escape"){
+
+        fecharModal();
+
+        document.getElementById("sidebar")
+            .classList.remove("open");
+
+    }
+
+});
+
+
+/* =========================================================
+   40 - AUTO ATUALIZAÇÃO DO RELÓGIO
+========================================================= */
+
+setInterval(atualizarRelogio,1000);
+
+
+/* =========================================================
+   41 - AUTO ATUALIZAÇÃO DA SESSÃO
+========================================================= */
+
+setInterval(atualizarSessao,1000);
+
+
+/* =========================================================
+   42 - INICIALIZAÇÃO
+========================================================= */
+
+carregarTema();
+
+carregarUsuario();
+
+atualizarRelogio();
+
+atualizarSessao();
+
+atualizarTudo();
+
+
+/* =========================================================
+   43 - PRIMEIRA NOTIFICAÇÃO
+========================================================= */
+
+setTimeout(function(){
+
+    if(usuarioAtual){
+
+        mostrarAviso(
+            "Painel carregado e pronto para uso."
+        );
+
+    }
+
+},700);
+
+
+/* =========================================================
+   44 - PROTEÇÃO DE DADOS DO FORMULÁRIO
+========================================================= */
+
+window.addEventListener("beforeunload",function(){
+
+    localStorage.setItem(
+        "painel_historico",
+        JSON.stringify(historico)
+    );
+
+});
+
+
+/* =========================================================
+   45 - RECUPERAÇÃO AUTOMÁTICA DO HISTÓRICO
+========================================================= */
+
+function recarregarHistorico(){
+
+    historico =
+        JSON.parse(
+            localStorage.getItem("painel_historico") || "[]"
+        );
+
+    atualizarTudo();
+
+}
+
+
+/* =========================================================
+   46 - CONTAR PROMOÇÕES DO DIA
+========================================================= */
+
+function contarPromocoesHoje(){
+
+    const hoje =
+        new Date().toLocaleDateString("pt-BR");
+
+    return historico.filter(function(item){
+
+        return item.data.startsWith(hoje);
+
+    }).length;
+
+}
+
+
+/* =========================================================
+   47 - CONTAR PROMOÇÕES POR CARGO
+========================================================= */
+
+function contarCargo(cargo){
+
+    return historico.filter(function(item){
+
+        return item.cargo === cargo;
+
+    }).length;
+
+}
+
+
+/* =========================================================
+   48 - ÚLTIMA PROMOÇÃO
+========================================================= */
+
+function ultimaPromocao(){
+
+    return historico.length ? historico[0] : null;
+
+}
+
+
+/* =========================================================
+   49 - TOTAL DE INSTRUTORES
+========================================================= */
+
+function totalInstrutores(){
+
+    const nomes = historico.map(function(item){
+
+        return item.instrutor;
+
+    });
+
+    return [...new Set(nomes)].length;
+
+}
+
+
+/* =========================================================
+   50 - TOTAL DE JOGADORES
+========================================================= */
+
+function totalJogadores(){
+
+    const nomes = historico.map(function(item){
+
+        return item.jogador;
+
+    });
+
+    return [...new Set(nomes)].length;
+
+}
+
+
+/* =========================================================
+   51 - PESQUISA LOCAL
+========================================================= */
+
+function pesquisarHistorico(termo){
+
+    termo = termo.toLowerCase();
+
+    return historico.filter(function(item){
+
+        return (
+            item.jogador.toLowerCase().includes(termo) ||
+            item.cargo.toLowerCase().includes(termo) ||
+            item.motivo.toLowerCase().includes(termo) ||
+            item.instrutor.toLowerCase().includes(termo)
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   52 - GERAR ID
+========================================================= */
+
+function gerarID(){
+
+    return Date.now().toString(36) +
+        Math.random().toString(36).substring(2,7);
+
+}
+
+
+/* =========================================================
+   53 - VALIDAR NOME
+========================================================= */
+
+function validarNome(nome){
+
+    return nome.length >= 2 &&
+        nome.length <= 40;
+
+}
+
+
+/* =========================================================
+   54 - VALIDAR MOTIVO
+========================================================= */
+
+function validarMotivo(motivo){
+
+    return motivo.length >= 3;
+
+}
+
+
+/* =========================================================
+   55 - LIMPAR TEXTO
+========================================================= */
+
+function limparTexto(texto){
+
+    return texto
+        .replace(/\s+/g," ")
+        .trim();
+
+}
+
+
+/* =========================================================
+   56 - FORMATAR DATA
+========================================================= */
+
+function formatarData(data){
+
+    return new Date(data)
+        .toLocaleString("pt-BR");
+
+}
+
+
+/* =========================================================
+   57 - FORMATAR NÚMERO
+========================================================= */
+
+function formatarNumero(numero){
+
+    return Number(numero).toLocaleString("pt-BR");
+
+}
+
+
+/* =========================================================
+   58 - STATUS DO SISTEMA
+========================================================= */
+
+function sistemaOnline(){
+
+    return navigator.onLine;
+
+}
+
+
+/* =========================================================
+   59 - DETECTAR INTERNET
+========================================================= */
+
+window.addEventListener("online",function(){
+
+    mostrarAviso("Conexão disponível.");
+
+});
+
+
+/* =========================================================
+   60 - DETECTAR OFFLINE
+========================================================= */
+
+window.addEventListener("offline",function(){
+
+    mostrarAviso(
+        "Você está offline. Recursos locais continuam funcionando.",
+        "warning"
+    );
+
+});
+
+
+/* =========================================================
+   61 - LIMPAR BUSCA
+========================================================= */
+
+function limparBusca(){
+
+    document.getElementById("nomeJogador").value = "";
+
+    document.getElementById("playerCard")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   62 - FOCAR BUSCA
+========================================================= */
+
+function focarBusca(){
+
+    document.getElementById("nomeJogador").focus();
+
+}
+
+
+/* =========================================================
+   63 - FOCAR PROMOÇÃO
+========================================================= */
+
+function focarPromocao(){
+
+    document.getElementById("promocaoJogador").focus();
+
+}
+
+
+/* =========================================================
+   64 - REINICIAR SESSÃO
+========================================================= */
+
+function reiniciarSessao(){
+
+    inicioSessao = Date.now();
+
+    mostrarAviso("Sessão reiniciada.");
+
+}
+
+
+/* =========================================================
+   65 - SAIR
+========================================================= */
+
+function sairPainel(){
+
+    localStorage.removeItem("painel_usuario");
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   66 - VERIFICAR GRUPO
+========================================================= */
+
+function verificarGrupo(){
+
+    mostrarAviso(
+        "Grupo configurado: " + GROUP_ID
+    );
+
+}
+
+
+/* =========================================================
+   67 - RESUMO
+========================================================= */
+
+function gerarResumo(){
+
+    return {
+
+        grupo:GROUP_ID,
+
+        promocoes:historico.length,
+
+        jogadores:totalJogadores(),
+
+        instrutores:totalInstrutores(),
+
+        hoje:contarPromocoesHoje()
+
+    };
+
+}
+
+
+/* =========================================================
+   68 - CONSOLE ADMIN
+========================================================= */
+
+function mostrarResumoConsole(){
+
+    console.log("PAINEL ADMINISTRATIVO");
+
+    console.log(gerarResumo());
+
+}
+
+
+/* =========================================================
+   69 - LIMPAR NOTIFICAÇÕES
+========================================================= */
+
+function limparNotificacoes(){
+
+    notificacoes = 0;
+
+    document.getElementById("notificationCount")
+        .textContent = "0";
+
+}
+
+
+/* =========================================================
+   70 - RESETAR CONFIGURAÇÕES
+========================================================= */
+
+function resetarConfiguracoes(){
+
+    localStorage.removeItem("painel_tema");
+
+    localStorage.removeItem("painel_usuario");
+
+    localStorage.removeItem("painel_historico");
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   71 - BACKUP
+========================================================= */
+
+function criarBackup(){
+
+    const backup = {
+
+        historico:historico,
+
+        usuario:usuarioAtual,
+
+        data:new Date().toISOString()
+
+    };
+
+    const blob =
+        new Blob(
+            [JSON.stringify(backup,null,2)],
+            {type:"application/json"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "backup-painel-" +
+        Date.now() +
+        ".json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   72 - ESTATÍSTICAS AVANÇADAS
+========================================================= */
+
+function estatisticasAvancadas(){
+
+    return {
+
+        total:historico.length,
+
+        hoje:contarPromocoesHoje(),
+
+        jogadores:totalJogadores(),
+
+        instrutores:totalInstrutores(),
+
+        ultima:ultimaPromocao()
+
+    };
+
+}
+
+
+/* =========================================================
+   73 - VERIFICAR FORMULÁRIO
+========================================================= */
+
+function formularioValido(){
+
+    const jogador =
+        document.getElementById("promocaoJogador").value.trim();
+
+    const cargo =
+        document.getElementById("novoCargo").value;
+
+    const motivo =
+        document.getElementById("motivo").value.trim();
+
+    return (
+        validarNome(jogador) &&
+        cargo !== "" &&
+        validarMotivo(motivo)
+    );
+
+}
+
+
+/* =========================================================
+   74 - AVISO DE FORMULÁRIO
+========================================================= */
+
+function verificarFormulario(){
+
+    if(formularioValido()){
+
+        mostrarAviso("Formulário preenchido corretamente.");
+
+    }else{
+
+        mostrarAviso(
+            "Ainda faltam informações.",
+            "warning"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   75 - DUPLICIDADE
+========================================================= */
+
+function verificarDuplicidade(jogador){
+
+    return historico.some(function(item){
+
+        return item.jogador.toLowerCase() ===
+            jogador.toLowerCase();
+
+    });
+
+}
+
+
+/* =========================================================
+   76 - ÚLTIMO CARGO
+========================================================= */
+
+function ultimoCargoDoJogador(jogador){
+
+    const registros =
+        historico.filter(function(item){
+
+            return item.jogador.toLowerCase() ===
+                jogador.toLowerCase();
+
+        });
+
+    return registros.length ?
+        registros[0].cargo :
+        null;
+
+}
+
+
+/* =========================================================
+   77 - HISTÓRICO DO JOGADOR
+========================================================= */
+
+function historicoDoJogador(jogador){
+
+    return historico.filter(function(item){
+
+        return item.jogador.toLowerCase() ===
+            jogador.toLowerCase();
+
+    });
+
+}
+
+
+/* =========================================================
+   78 - EXPORTAR JSON
+========================================================= */
+
+function exportarJSON(){
+
+    const blob =
+        new Blob(
+            [JSON.stringify(historico,null,2)],
+            {type:"application/json"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download = "historico.json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   79 - EXPORTAR CSV
+========================================================= */
+
+function exportarCSV(){
+
+    let csv =
+        "Jogador,Cargo,Motivo,Instrutor,Data\n";
+
+    historico.forEach(function(item){
+
+        csv +=
+            `"${item.jogador}",` +
+            `"${item.cargo}",` +
+            `"${item.motivo}",` +
+            `"${item.instrutor}",` +
+            `"${item.data}"\n`;
+
+    });
+
+    const blob =
+        new Blob([csv],{type:"text/csv"});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download = "historico.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   80 - TESTE DO SISTEMA
+========================================================= */
+
+function testarSistema(){
+
+    const testes = {
+
+        navegador:true,
+
+        armazenamento:
+            typeof localStorage !== "undefined",
+
+        grupo:
+            GROUP_ID === "44224373",
+
+        online:
+            navigator.onLine
+
+    };
+
+    console.table(testes);
+
+    mostrarAviso("Teste do sistema concluído.");
+
+}
+
+
+/* =========================================================
+   81 - MODO DE MANUTENÇÃO
+========================================================= */
+
+function modoManutencao(){
+
+    mostrarAviso(
+        "Modo de manutenção disponível para integração futura."
+    );
+
+}
+
+
+/* =========================================================
+   82 - LIMPAR TOASTS
+========================================================= */
+
+function limparToasts(){
+
+    document.getElementById("toastContainer")
+        .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   83 - VOLTAR AO INÍCIO
+========================================================= */
+
+function voltarInicio(){
+
+    abrirSecaoPorNome("inicio");
+
+}
+
+
+/* =========================================================
+   84 - ABRIR PROMOÇÃO
+========================================================= */
+
+function abrirPromocao(){
+
+    abrirSecaoPorNome("promocoes");
+
+    setTimeout(focarPromocao,100);
+
+}
+
+
+/* =========================================================
+   85 - GERAR CÓDIGO DE REGISTRO
+========================================================= */
+
+function gerarCodigoRegistro(){
+
+    return "PROM-" +
+        Date.now().toString(36).toUpperCase();
+
+}
+
+
+/* =========================================================
+   86 - TEMPO DA PÁGINA
+========================================================= */
+
+function tempoDesdeInicio(){
+
+    return Math.floor(
+        (Date.now() - inicioSessao) / 1000
+    );
+
+}
+
+
+/* =========================================================
+   87 - ATUALIZAR STATUS
+========================================================= */
+
+function atualizarStatus(){
+
+    const online = sistemaOnline();
+
+    document.querySelectorAll(".status-dot")
+        .forEach(function(dot){
+
+            dot.style.background =
+                online ? "var(--green)" : "#ff5757";
+
+        });
+
+}
+
+
+/* =========================================================
+   88 - AUTO STATUS
+========================================================= */
+
+setInterval(atualizarStatus,5000);
+
+
+/* =========================================================
+   89 - SALVAMENTO AUTOMÁTICO
+========================================================= */
+
+setInterval(function(){
+
+    if(salvarHistoricoAtivo){
+
+        localStorage.setItem(
+            "painel_historico",
+            JSON.stringify(historico)
+        );
+
+    }
+
+},10000);
+
+
+/* =========================================================
+   90 - ATUALIZAR CONTAGEM
+========================================================= */
+
+setInterval(atualizarContadores,3000);
+
+
+/* =========================================================
+   91 - DATA ATUAL
+========================================================= */
+
+function dataAtual(){
+
+    return new Date()
+        .toLocaleDateString("pt-BR");
+
+}
+
+
+/* =========================================================
+   92 - HORA ATUAL
+========================================================= */
+
+function horaAtual(){
+
+    return new Date()
+        .toLocaleTimeString("pt-BR");
+
+}
+
+
+/* =========================================================
+   93 - DIA DA SEMANA
+========================================================= */
+
+function diaSemana(){
+
+    return new Date()
+        .toLocaleDateString(
+            "pt-BR",
+            {weekday:"long"}
+        );
+
+}
+
+
+/* =========================================================
+   94 - GERAR RELATÓRIO
+========================================================= */
+
+function gerarRelatorio(){
+
+    return `
+RELATÓRIO ADMINISTRATIVO
+
+Grupo: ${GROUP_ID}
+
+Data: ${dataAtual()}
+
+Hora: ${horaAtual()}
+
+Dia: ${diaSemana()}
+
+Promoções: ${historico.length}
+
+Jogadores: ${totalJogadores()}
+
+Instrutores: ${totalInstrutores()}
+
+Promoções hoje: ${contarPromocoesHoje()}
+`;
+
+}
+
+
+/* =========================================================
+   95 - BAIXAR RELATÓRIO
+========================================================= */
+
+function baixarRelatorio(){
+
+    const blob =
+        new Blob(
+            [gerarRelatorio()],
+            {type:"text/plain"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download = "relatorio-administrativo.txt";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   96 - INFORMAÇÃO DO NAVEGADOR
+========================================================= */
+
+function informacoesNavegador(){
+
+    return {
+
+        navegador:navigator.userAgent,
+
+        idioma:navigator.language,
+
+        online:navigator.onLine,
+
+        tela:
+            window.innerWidth +
+            "x" +
+            window.innerHeight
+
+    };
+
+}
+
+
+/* =========================================================
+   97 - TESTE DE ARMAZENAMENTO
+========================================================= */
+
+function testarArmazenamento(){
+
+    try{
+
+        localStorage.setItem(
+            "teste_painel",
+            "ok"
+        );
+
+        localStorage.removeItem(
+            "teste_painel"
+        );
+
+        return true;
+
+    }catch(e){
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   98 - LIMPAR DADOS TEMPORÁRIOS
+========================================================= */
+
+function limparDadosTemporarios(){
+
+    sessionStorage.clear();
+
+    mostrarAviso(
+        "Dados temporários limpos."
+    );
+
+}
+
+
+/* =========================================================
+   99 - RECARREGAR
+========================================================= */
+
+function recarregarPagina(){
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   100 - INICIALIZAÇÃO FINAL
+========================================================= */
+
+function inicializacaoFinal(){
+
+    carregarTema();
+
+    carregarUsuario();
+
+    recarregarHistorico();
+
+    atualizarRelogio();
+
+    atualizarSessao();
+
+    atualizarStatus();
+
+    mostrarResumoConsole();
+
+}
+
+
+/* =========================================================
+   EXECUTAR
+========================================================= */
+
+inicializacaoFinal();
+
+</script>
+
+</body>
+</html>
